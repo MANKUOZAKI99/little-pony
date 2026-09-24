@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{# home.html — the front page. #}
+{% block content %}
+<section class="hero-box">
+  <h1 style="font-size: 32px; color: var(--maroon); margin-bottom: 8px;">{{ team.group.topic }}</h1>
+  <p class="lead" style="font-size: 16px; margin-bottom: 20px;">
+    ระบบประสานงานช่วยเหลือค้นหาของหาย และแจ้งส่งคืนสิ่งของที่เก็บได้ สำหรับนักศึกษาและบุคลากร
+  </p>
+  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <a href="{{ url_for('page', name='page1') }}" class="btn">🔍 ค้นหาของหาย</a>
+    <a href="{{ url_for('page', name='page2') }}" class="btn ghost">+ แจ้งของหาย / พบของ</a>
+  </div>
+</section>
+
+<h2>เมนูหลักของระบบ</h2>
+<section class="cards">
+  {% for p in nav %}
+  <a class="card" href="{{ url_for('page', name=p.name) }}">
+    <span class="card-kicker">{{ p.name }}</span>
+    <span class="card-title">{{ p.title }}</span>
+  </a>
+  {% endfor %}
+</section>
+{% endblock %}

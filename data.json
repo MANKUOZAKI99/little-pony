@@ -1,0 +1,102 @@
+[
+  {
+    "id": 101,
+    "type": "lost",
+    "title": "กระเป๋าสตางค์สีดำ",
+    "category": "ของใช้ส่วนตัว",
+    "location": "โรงอาหารกลาง",
+    "reward": 200,
+    "phone": "0812345678",
+    "status": 1
+  },
+  {
+    "id": 102,
+    "type": "lost",
+    "title": "กุญแจรถยนต์ Honda",
+    "category": "ยานพาหนะ",
+    "location": "ลานจอดรถตึก A",
+    "reward": 500,
+    "phone": "0898765432",
+    "status": 1
+  },
+  {
+    "id": 103,
+    "type": "found",
+    "title": "หูฟัง AirPods Pro",
+    "category": "อุปกรณ์อิเล็กทรอนิกส์",
+    "location": "ห้องสมุด ชั้น 2",
+    "reward": 0,
+    "phone": "0855556666",
+    "status": 2
+  },
+  {
+    "id": 104,
+    "type": "lost",
+    "title": "บัตรนักศึกษา UBU",
+    "category": "บัตร/เอกสาร",
+    "location": "ตึก EN3 วิศวะ",
+    "reward": 50,
+    "phone": "0861112233",
+    "status": 1
+  },
+  {
+    "id": 105,
+    "type": "found",
+    "title": "แว่นสายตากรอบใส",
+    "category": "ของใช้ส่วนตัว",
+    "location": "โรงอาหารคณะวิศวะ",
+    "reward": 0,
+    "phone": "0872223344",
+    "status": 1
+  },
+  {
+    "id": 106,
+    "type": "lost",
+    "title": "iPad Air พร้อมปากกา",
+    "category": "อุปกรณ์อิเล็กทรอนิกส์",
+    "location": "ห้องบรรยาย EN4101",
+    "reward": 1000,
+    "phone": "0883334455",
+    "status": 1
+  },
+  {
+    "id": 107,
+    "type": "found",
+    "title": "ร่มพับสีน้ำเงิน",
+    "category": "ของใช้ส่วนตัว",
+    "location": "ทางเดินเชื่อมตึกวิศวะ",
+    "reward": 0,
+    "phone": "0894445566",
+    "status": 2
+  },
+  {
+    "id": 108,
+    "type": "lost",
+    "title": "เสื้อช็อปวิศวะสีกรม",
+    "category": "เครื่องแต่งกาย",
+    "location": "ห้องแล็บคอมพิวเตอร์",
+    "reward": 100,
+    "phone": "0815556677",
+    "status": 1
+  },
+  {
+    "id": 109,
+    "type": "found",
+    "title": "กระติกน้ำสแตนเลส",
+    "category": "ของใช้ส่วนตัว",
+    "location": "สนามบาสเกตบอล",
+    "reward": 0,
+    "phone": "0826667788",
+    "status": 2
+  },
+  {
+    "id": 110,
+    "type": "lost",
+    "title": "พาวเวอร์แบงก์ Eloop สีขาว",
+    "category": "อุปกรณ์อิเล็กทรอนิกส์",
+    "location": "ศาลาหน้าคณะวิศวะ",
+    "reward": 100,
+    "phone": "0837778899",
+    "status": 1
+  }
+]

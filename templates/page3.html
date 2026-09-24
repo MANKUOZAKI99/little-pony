@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="margin-bottom: 16px;">
+  <a href="{{ url_for('page', name='page1') }}" class="btn small ghost">← กลับหน้ารายการ</a>
+</div>
+
+{% if item %}
+<div class="panel" style="max-width: 680px; margin: 0 auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 16px;">
+    <div>
+      <span class="muted" style="font-size: 13px;">รหัสรายการ #{{ item.id }}</span>
+      <h1 style="margin: 4px 0 0;">{{ item.title }}</h1>
+    </div>
+
+    <div>
+      {% if item.type == 'lost' %}
+      <span class="badge bad">{{ type_label }}</span>
+      {% else %}
+      <span class="badge gold">{{ type_label }}</span>
+      {% endif %}
+
+      {% if is_returned %}
+      <span class="badge good">{{ status_label }}</span>
+      {% else %}
+      <span class="badge">{{ status_label }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <table style="margin-bottom: 20px;">
+    <tr>
+      <th style="width: 140px;">หมวดหมู่</th>
+      <td>{{ item.category }}</td>
+    </tr>
+    <tr>
+      <th>สถานที่</th>
+      <td>{{ item.location }}</td>
+    </tr>
+    <tr>
+      <th>เงินรางวัลนำส่ง</th>
+      <td>
+        {% if item.reward > 0 %}
+        <strong style="color: var(--maroon);">{{ item.reward }} บาท</strong>
+        {% else %}
+        <span class="muted">ไม่มีระบุ</span>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>สถานะปัจจุบัน</th>
+      <td>
+        {% if is_returned %}
+        <span style="color: #1b6b3a; font-weight: 600;">✓ รายการนี้ส่งคืนเรียบร้อยแล้ว</span>
+        {% else %}
+        <span style="color: #9b1c1c; font-weight: 600;">● กำลังรอการติดต่อรับส่งคืน</span>
+        {% endif %}
+      </td>
+    </tr>
+  </table>
+
+  {% if is_returned %}
+  <div class="banner" style="background: #e6f5ec; border-color: #a7e3be; color: #1b6b3a; text-align: center; font-weight: 600;">
+    ✓ รายการนี้ส่งคืนแล้ว — ขอบคุณทุกคนที่ช่วยประสานงาน
+  </div>
+  {% else %}
+  <div class="hero-box" style="text-align: center; margin-bottom: 20px;">
+    <h3 style="margin-top: 0;">ข้อมูลสำหรับติดต่อ</h3>
+    <p class="muted" style="margin-bottom: 14px;">หากคุณเป็นเจ้าของหรือพบเห็นสิ่งของนี้ สามารถติดต่อได้ทันทีที่เบอร์:</p>
+    <a href="tel:{{ item.phone }}" class="btn" style="font-size: 18px; padding: 12px 24px;">
+      📞 ติดต่อ {{ item.phone }}
+    </a>
+  </div>
+  {% endif %}
+
+  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 16px; margin-top: 20px;">
+    {% if prev_item %}
+    <a href="{{ url_for('page', name='page3') }}?id={{ prev_item.id }}" class="btn small ghost">
+      ← #{{ prev_item.id }} {{ prev_item.title }}
+    </a>
+    {% else %}
+    <span class="muted" style="font-size: 13px;">(ไม่มีรายการก่อนหน้า)</span>
+    {% endif %}
+
+    {% if next_item %}
+    <a href="{{ url_for('page', name='page3') }}?id={{ next_item.id }}" class="btn small ghost">
+      #{{ next_item.id }} {{ next_item.title }} →
+    </a>
+    {% else %}
+    <span class="muted" style="font-size: 13px;">(ไม่มีรายการถัดไป)</span>
+    {% endif %}
+  </div>
+</div>
+{% else %}
+<div class="empty">
+  ไม่พบข้อมูลสิ่งของรายการนี้
+</div>
+{% endif %}
+{% endblock %}

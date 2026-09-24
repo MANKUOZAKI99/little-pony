@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="hero-box">
+  <h1>{{ title }}</h1>
+  <p class="lead">ค้นหาและตรวจสอบรายการของหายหรือของที่เก็บได้ภายในมหาวิทยาลัย</p>
+
+  <div class="stat-grid" style="margin-top: 14px;">
+    <div class="stat">
+      <div class="label">รายการทั้งหมด</div>
+      <div class="value">{{ total }} <span class="unit">รายการ</span></div>
+    </div>
+    <div class="stat bad">
+      <div class="label">กำลังตามหา</div>
+      <div class="value">{{ count_lost }} <span class="unit">ชิ้น</span></div>
+    </div>
+    <div class="stat good">
+      <div class="label">ส่งคืนสำเร็จแล้ว</div>
+      <div class="value">{{ count_returned }} <span class="unit">ชิ้น</span></div>
+    </div>
+  </div>
+</div>
+
+<form method="get" style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+  <input name="q" value="{{ keyword }}" placeholder="พิมพ์ชื่อของ หมวดหมู่ หรือสถานที่พบ..." style="flex:1; min-width:240px; padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+  
+  <select name="type" style="padding:10px 12px; border:1px solid #cbd5e1; border-radius:8px;">
+    <option value="">ทั้งหมดทุกประเภท</option>
+    <option value="lost" {% if selected_type == 'lost' %}selected{% endif %}>เฉพาะของหาย</option>
+    <option value="found" {% if selected_type == 'found' %}selected{% endif %}>เฉพาะเก็บของได้</option>
+  </select>
+
+  <button class="btn" type="submit">ค้นหา</button>
+  {% if keyword or selected_type %}
+  <a href="{{ url_for('page', name='page1') }}" class="btn ghost">ล้างตัวกรอง</a>
+  {% endif %}
+</form>
+
+<p class="muted" style="margin-bottom: 16px;">พบ {{ results|length }} รายการ จากทั้งหมด {{ total }} รายการ</p>
+
+{% if results %}
+<div class="card-grid">
+  {% for item in results %}
+  <div class="item-card">
+    <div class="body">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        {% if item.type == 'lost' %}
+        <span class="badge bad">ของหาย</span>
+        {% else %}
+        <span class="badge gold">เก็บของได้</span>
+        {% endif %}
+
+        {% if item.status == 2 %}
+        <span class="badge good">คืนสำเร็จแล้ว</span>
+        {% else %}
+        <span class="badge">กำลังตามหา</span>
+        {% endif %}
+      </div>
+
+      <h3 style="margin: 4px 0 6px; font-size: 16px; font-weight: 600;">{{ item.title }}</h3>
+      <p class="muted" style="margin: 0; font-size: 13px;">หมวดหมู่: {{ item.category }}</p>
+      <p class="muted" style="margin: 0; font-size: 13px;">สถานที่: {{ item.location }}</p>
+
+      {% if item.reward > 0 %}
+      <div class="price" style="margin-top: 10px; font-size: 15px;">
+        รางวัล: {{ item.reward }} บาท
+      </div>
+      {% endif %}
+
+      <div style="margin-top: 14px;">
+        <a href="{{ url_for('page', name='page3') }}?id={{ item.id }}" class="btn small full">ดูรายละเอียด</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">
+  ไม่พบรายการที่ตรงกับเงื่อนไขการค้นหา
+</div>
+{% endif %}
+
+<div style="margin-top: 24px; text-align: center;">
+  <a href="{{ url_for('page', name='page2') }}" class="btn">+ แจ้งของหายหรือพบของใหม่</a>
+</div>
+{% endblock %}

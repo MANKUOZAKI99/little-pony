@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ title }}</h1>
+<p class="lead">กรอกข้อมูลเมื่อทำของหาย หรือเมื่อเก็บสิ่งของได้เพื่อประสานงานส่งคืนเจ้าของ</p>
+
+<div class="two-col">
+  <div class="panel">
+    <h2>แบบฟอร์มแจ้งข้อมูล</h2>
+    <form method="post">
+      <div class="field">
+        <label for="type">ประเภทการแจ้ง</label>
+        <select id="type" name="type" required>
+          <option value="lost">ของหาย (ตามหาของ)</option>
+          <option value="found">เก็บของได้ (ตามหาเจ้าของ)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="title">ชื่อสิ่งของ *</label>
+        <input type="text" id="title" name="title" placeholder="เช่น กระเป๋าสตางค์, กุญแจรถยนต์" required>
+      </div>
+
+      <div class="field">
+        <label for="category">หมวดหมู่</label>
+        <select id="category" name="category">
+          <option value="ของใช้ส่วนตัว">ของใช้ส่วนตัว</option>
+          <option value="อุปกรณ์อิเล็กทรอนิกส์">อุปกรณ์อิเล็กทรอนิกส์</option>
+          <option value="ยานพาหนะ">ยานพาหนะ</option>
+          <option value="บัตร/เอกสาร">บัตร/เอกสาร</option>
+          <option value="เครื่องแต่งกาย">เครื่องแต่งกาย</option>
+          <option value="อื่นๆ">อื่นๆ</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="location">สถานที่ที่ทำหาย / สถานที่พบ *</label>
+        <input type="text" id="location" name="location" placeholder="เช่น โรงอาหารกลาง, หน้าห้องสมุด" required>
+      </div>
+
+      <div class="field">
+        <label for="reward">เงินรางวัลนำส่ง (บาท)</label>
+        <input type="number" id="reward" name="reward" min="0" value="0">
+      </div>
+
+      <div class="field">
+        <label for="phone">เบอร์โทรศัพท์สำหรับติดต่อ *</label>
+        <input type="text" id="phone" name="phone" placeholder="เช่น 0812345678" required>
+      </div>
+
+      <button type="submit" class="btn">บันทึกข้อมูล</button>
+    </form>
+  </div>
+
+  <div>
+    <h2>รายการล่าสุดในระบบ ({{ count }} รายการ)</h2>
+    <p class="muted">สามารถอัปเดตสถานะเมื่อส่งคืนแล้ว หรือลบรายการที่ไม่ถูกต้องได้</p>
+
+    <table>
+      <tr>
+        <th>ชื่อของ</th>
+        <th>สถานะ</th>
+        <th>จัดการ</th>
+      </tr>
+      {% for it in items %}
+      <tr>
+        <td>
+          <a href="{{ url_for('page', name='page3') }}?id={{ it.id }}"><strong>{{ it.title }}</strong></a>
+          <br>
+          <span class="muted" style="font-size: 12px;">{{ it.location }}</span>
+        </td>
+        <td>
+          {% if it.status == 2 %}
+          <span class="badge good">คืนแล้ว</span>
+          {% else %}
+          <span class="badge">รอรับคืน</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if it.status != 2 %}
+          <form method="post" class="inline">
+            <input type="hidden" name="mark_returned" value="{{ it.id }}">
+            <button type="submit" class="btn small ghost" title="ทำเครื่องหมายว่าคืนแล้ว">✓ คืน</button>
+          </form>
+          {% endif %}
+          <form method="post" class="inline" onsubmit="return confirm('ยืนยันที่จะลบรายการนี้?');">
+            <input type="hidden" name="delete" value="{{ it.id }}">
+            <button type="submit" class="btn small danger" title="ลบรายการ">ลบ</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}
